@@ -12,15 +12,22 @@
 <body>
 <center>
 <h1 style ="text-align: center">Register Form</h1>
-<form action="RegisterUserdb.jsp" method="post" style="width: 400px; border: 1px solid black; padding: 10px;">
+<form action="RegisterProductdb.jsp" method="post" style="width: 400px; border: 1px solid black; padding: 10px;">
 
 <input type="hidden" name="submitted" value="true">
 
-<p>User name : <input type="text" name="username"/></p>
-<p>Password : <input type="password" name="password"/><p>
-<p>Phone Number : <input type="text" name="phone"/></p>
-<p>Email : <input type="text" name="email"/><p>
-<p>Name : <input type="text" name="name"/></p>
+<p>User name : <input type="text" name="username" value="${param.username }"/></p>
+<p>Product Name : <select name="pname">
+<option value="phone">Phone</option>
+<option value="note">Note</option>
+<option value="camera">Camera</option>
+<option value="tv">TV</option>
+<option value="oven">Oven</option>
+<option value="modem">Modem</option>
+</select>
+<p>Serial Number: <input type="text" name="serialNo"/></p>
+<p>Purchase Date : <input type="date" name="pDate"/><p>
+
 
 <input type="submit" value="Register" name="register"/>
 </form>
