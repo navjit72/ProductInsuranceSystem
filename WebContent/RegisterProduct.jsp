@@ -8,37 +8,76 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Register</title>
+<style>
+.register{
+text-align: center;
+border-radius: 5px;
+font-weight: bold;
+margin : 10px;
+padding-top : 5px;
+width : 100px;
+height : 25px;
+}
+form{
+width: 500px;
+border: 1px solid black; 
+padding: 10px; 
+text-align: center; 
+margin: 100px auto;
+}
+table input, table select {
+width : 200px;
+}
+</style>
 </head>
 <body>
-<center>
-<h1 style ="text-align: center">Register Form</h1>
-<form action="RegisterProductdb.jsp" method="post" style="width: 400px; border: 1px solid black; padding: 10px;">
 
+<form action="RegisterProductdb.jsp" method="post">
+<h1 style ="text-align: center">Register Product Form</h1>
 <input type="hidden" name="submitted" value="true">
+<table style="margin : 0px auto">
+<tr>
+<th>User name : </th>
+<td><p> <c:out value="${sessionScope.para}" /></p></td>
+</tr>
+<tr>
+<th>Product Name :  </th>
+<td><select name="pname">
+ <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
+                           url="jdbc:mysql://localhost/groupproject"
+                           user="root"  password="1234"/>
+ 
+ 
+        <sql:query dataSource="${dbsource}" var="result">
+            SELECT * from product;
+        </sql:query>
+<c:forEach var="row" items="${result.rows}">
+<option><c:out value="${row.pname}"/></option>
+</c:forEach>
+</select></td>
+</tr>
+<tr>
+<th>Serial Number : </th>
+<td><input type="text" name="serialNo"/></td>
+</tr>
+<tr>
+<th>Purchase Date : </th>
+<td><input type="date" name="pDate"/></td>
+</tr>
+<tr>
+<td colspan="2"><input type="submit" value="Register" class= "register" name="register"/></td>
+</tr>
+</table>
 
-<p>User name : <input type="text" name="username" value="${param.username }"/></p>
-<p>Product Name : <select name="pname">
-<option value="phone">Phone</option>
-<option value="note">Note</option>
-<option value="camera">Camera</option>
-<option value="tv">TV</option>
-<option value="oven">Oven</option>
-<option value="modem">Modem</option>
-</select>
-<p>Serial Number: <input type="text" name="serialNo"/></p>
-<p>Purchase Date : <input type="date" name="pDate"/><p>
 
-
-<input type="submit" value="Register" name="register"/>
-</form>
 <font color="red"><c:if test="${not empty param.errMsg}">
             <c:out value="${param.errMsg}" />
         </c:if></font>
         <font color="green"><c:if test="${not empty param.susMsg}">
             <c:out value="${param.susMsg}" />
         </c:if></font>
-</center>
-<a href="MainPage.jsp">Go To Main Page</a>
+</form>
+<a href="Login.jsp">Go To Main Page</a>
 
 </body>
 </html>

@@ -8,45 +8,71 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Login</title>
+<style type="text/css">
+.registerButton{
+display: block;
+width: 200px;
+height: 25px;
+background-color:black;
+color:white;
+text-decoration:none;
+border-radius: 5px;
+font-weight: bold;
+margin : 10px;
+padding-top : 5px;
+}
+.login{
+text-align: center;
+border-radius: 5px;
+font-weight: bold;
+margin : 10px;
+padding-top : 5px;
+width : 100px;
+height : 25px;
+}
+form{
+width: 400px;
+border: 1px solid black; 
+padding: 10px; 
+text-align: center; 
+margin: 100px auto;
+}
+
+</style>
 </head>
 <body>
-<center>
-<h1 style ="text-align: center">Login Form</h1>
-<form action="" method="post" style="width: 400px; border: 1px solid black; padding: 10px;">
 
+
+<form action="Logindb.jsp" method="post">
+<h1>Login Form</h1>
 <input type="hidden" name="submitted" value="true">
-<c:if test="${(param.submitted && empty param.username) || (param.submitted && empty param.password)}">
-<h3 style="color: red;">Please fill username and password</h3>
-</c:if>
-<p>User name : <input type="text" name="username"/></p>
-<p>Password : <input type="password" name="password"/><p>
-<input type="submit" value="Login" name="login"/>
+
+<table style="margin : 0px auto">
+<tr>
+<th>User name : </th>
+<td><input type="text" name="username"/></td>
+</tr>
+<tr>
+<th>Password : </th>
+<td><input type="password" name="password"/></td>
+</tr>
+<tr>
+<td colspan="2"><input type="submit" value="Login" class="login" name="login"/></td>
+</tr>
+<tr>
+<td colspan="2"><a href="Register.jsp" class="registerButton"> New User? Register.</a></td>
+</tr>
+</table>
+<c:set var="username" value="${param.username}" scope="session"  />
+<font color="red"><c:if test="${not empty param.errMsg}">
+            <c:out value="${param.errMsg}" />
+        </c:if></font>
+        <font color="green"><c:if test="${not empty param.susMsg}">
+            <c:redirect url="RegisterProduct.jsp" >              
+        </c:redirect>
+        </c:if></font>
 
 </form>
-
-
-<c:if test="${param.submitted && not empty param.username && not empty param.password }">
-<sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
-                           url="jdbc:mysql://localhost/groupproject"
-                           user="root"  password="1234"/>
- <sql:query dataSource="${dbsource}" var="result">
-            SELECT * from users where username='${param.username}' and password='${param.password}';
-        </sql:query>
-        <c:choose>
-        <c:when test="${result.rowCount == 0 }">
-        <c:out value="User not registered. Please go back to register."></c:out>
-        </c:when>
-        <c:otherwise>
-        <c:redirect url="RegisterProduct.jsp" >
-                <c:set scope="session"
-                   var="loginUser"
-                   value="${param.username}"/>
-        </c:redirect>
-        </c:otherwise>
-        </c:choose>
-</c:if>
-</center>
-<a href="MainPage.jsp">Go To Main Page</a>
 
 </body>
 </html>
