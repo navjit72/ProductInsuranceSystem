@@ -63,7 +63,6 @@ margin: 100px auto;
 <td colspan="2"><a href="Register.jsp" class="registerButton"> New User? Register.</a></td>
 </tr>
 </table>
-<c:set var="username" value="${param.username}" scope="session"  />
 <font color="red"><c:if test="${not empty param.errMsg}">
             <c:out value="${param.errMsg}" />
         </c:if></font>

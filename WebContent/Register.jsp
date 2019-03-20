@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Register</title>
+<title>Register User</title>
 <style type="text/css">
 .register{
 text-align: center;

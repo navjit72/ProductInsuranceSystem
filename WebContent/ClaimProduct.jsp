@@ -8,15 +8,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Register Product</title>
+<title>Claim Product</title>
 <style>
-.register{
+.claim{
 text-align: center;
 border-radius: 5px;
 font-weight: bold;
 margin : 10px;
 padding-top : 5px;
-width : 100px;
+width : 120px;
 height : 25px;
 }
 form{
@@ -62,8 +62,8 @@ li a {
   <li><a href="Login.jsp">Logout</a></li>
 </ul>
 
-<form action="RegisterProductdb.jsp" method="post">
-<h1 style ="text-align: center">Register Product Form</h1>
+<form action="ClaimProductdb.jsp" method="post">
+<h1 style ="text-align: center">Claim Product Form</h1>
 <input type="hidden" name="submitted" value="true">
 <table style="margin : 0px auto">
 <tr>
@@ -79,7 +79,7 @@ li a {
  
  
         <sql:query dataSource="${dbsource}" var="result">
-            SELECT * from product;
+            SELECT pname from product where pId = (select pId from registeredproducts where username='${sessionScope.username}');
         </sql:query>
 <c:forEach var="row" items="${result.rows}">
 <option><c:out value="${row.pname}"/></option>
@@ -87,17 +87,11 @@ li a {
 </select></td>
 </tr>
 <tr>
-<th>Serial Number : </th>
-<td><input type="text" name="serialNo"/></td>
+<th>Issue : </th>
+<td><textarea rows="3" cols="25" name="issue"></textarea></td>
 </tr>
 <tr>
-<th>Purchase Date : </th>
-<c:set var="now" value="<%= new java.util.Date() %>" />
-<fmt:formatDate type="date" pattern="yyyy-MM-dd" value="${ now }" var="maxDate" />
-<td><input type="date" name="pDate" max="${ maxDate }"></td>
-</tr>
-<tr>
-<td colspan="2"><input type="submit" value="Register" class= "register" name="register"/></td>
+<td colspan="2"><input type="submit" value="Claim Product" class= "claim" name="claim"/></td>
 </tr>
 </table>
 
