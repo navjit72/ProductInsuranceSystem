@@ -67,7 +67,7 @@ margin: 100px auto;
             <c:out value="${param.errMsg}" />
         </c:if></font>
         <font color="green"><c:if test="${not empty param.susMsg}">
-            <c:redirect url="RegisterProduct.jsp" >              
+            <c:redirect url="UserDashboard.jsp" >              
         </c:redirect>
         </c:if></font>
 

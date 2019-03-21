@@ -19,12 +19,23 @@
         <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
                            url="jdbc:mysql://localhost/groupproject"
                            user="root"  password="1234"/>
-       
+                             
        <sql:query dataSource="${dbsource}" var="product">
        		Select pId from product where pname='${param.pname }';
        </sql:query> 
+       
  		<c:forEach var="row" items="${product.rows}">
-        <sql:update dataSource="${dbsource}" var="result">
+ 		 <sql:query dataSource="${dbsource}" var="registerDetails">
+       		Select * from registeredproducts where username='${sessionScope.username}' and pId='${row.pId }' and serialNo='${param.serialNo }' and purchaseDate='${param.pDate}';
+       </sql:query>
+       <c:choose>
+       <c:when test="${registerDetails.rowCount>0 }">
+       <c:redirect url="RegisterProduct.jsp" >
+                <c:param name="errMsg" value="Product already registered!!." />
+            </c:redirect>
+       </c:when>
+       <c:otherwise>
+       <sql:update dataSource="${dbsource}" var="result">
             INSERT INTO registeredproducts VALUES (?,?,?,?);
             <sql:param value="${sessionScope.username}" />
             <sql:param value="${row.pId}" />
@@ -32,7 +43,7 @@
             <sql:param value="${param.pDate}" />
 
         </sql:update>
-        </c:forEach>
+        
         <c:if test="${result>=1}">
             <font size="5" color='green'> Congratulations ! Data inserted
             successfully.</font>
@@ -42,6 +53,9 @@
             successfully." />
             </c:redirect>
         </c:if>
+       </c:otherwise>
+       </c:choose>
+      </c:forEach>
  
 </body>
 </html>
