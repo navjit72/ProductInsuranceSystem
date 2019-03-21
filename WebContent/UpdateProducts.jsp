@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Admin Dashboard</title>
+<title>Products</title>
 <style>
 .update{
 text-align: center;
@@ -61,34 +61,32 @@ li a {
  <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
                            url="jdbc:mysql://localhost/groupproject"
                            user="root"  password="1234"/>
+                           
+                          
 <form action="" method="post">
 <h1 style ="text-align: center">Dashboard</h1>
 <input type="hidden" name="submitted" value="true">
-<sql:query dataSource="${dbsource}" var="usersDetails">
-       SELECT * from claims;
+<sql:query dataSource="${dbsource}" var="productDetails">
+       SELECT * from product;
    </sql:query>
 
 <table style="margin : 0px auto;border: 1px solid black;">
-<tr><th>UserName</th><th>Product Name</th><th>Serial Number</th><th>Purchased Date</th><th>Claimed Date</th><th>Issue</th><th>Status</th><th>Click to Update</th>
+<tr><th>Product Name</th><th>Color</th><th>Model</th><th>Click to Update</th>
 </tr>
 
-<c:forEach var="row" items="${usersDetails.rows }">
-<sql:query dataSource="${dbsource}" var="productIds">
-       SELECT pname from product where pId='${row.pId}';
-   </sql:query>
-<c:forEach var="rowx" items="${productIds.rows }">
+<c:forEach var="row" items="${productDetails.rows }">
+
 <tr>
-<td>${row.username }</td><td>${rowx.pname }</td><td>${row.serialNo}</td><td>${row.pDate }</td><td>${row.claimDate }</td><td>${row.issue }</td><td>${row.status }</td>
-<td><input type="radio" name="radiogroup" value="${row.username },${row.pId},${row.serialNo },${row.pDate },${row.claimDate },${row.issue },${row.status }"/></td>
+<td>${row.pname }</td><td>${row.color}</td><td>${row.model }</td>
+<td><input type="radio" name="radiogroup" value="${row.pname },${row.color},${row.model }"/></td>
 </tr>
 </c:forEach>
-</c:forEach>
+
 <tr>
-<td colspan="8"><input type="submit" value="Display Info" class= "update" name="display"/></td>
+<td colspan="4"><input type="submit" value="Update Product" class= "update" name="update"/></td>
 </tr>
 </table>
 </form>
-
 
 <form>
 <input type="hidden" name="submitted2" value="true" />
@@ -99,19 +97,16 @@ li a {
 </c:when>
 <c:when test="${param.submitted and not empty param.radiogroup}">
 <c:set var="data" value="${fn:split(param.radiogroup,',') }" />
-<table style="margin : 30px auto;border: 1px solid black;">
-<tr><th>Claim Date</th><th>Issue</th><th>Status</th>
+<table style="margin : 20px auto;border: 1px solid black;">
+<tr><th>Product Name</th><th>Color</th><th>Model</th>
 </tr>
 <tr>
-<td>${data[4]}</td><td>${data[5]}</td>
-<td><select name="status">
-<option>Processing</option>
-<option>Accepted</option>
-<option>Rejected</option>
-</select></td>
+<td><input type="text" value="${data[0]}" name="pname"/></td>
+<td><input type="text" value="${data[1]}" name="color"/></td>
+<td><input type="text" value="${data[2]}" name="model"/></td>
 </tr>
 <tr>
-<td colspan="3"><input type="submit" value="Update Claim Info" class= "update" name="update"/></td>
+<td colspan="3"><input type="submit" value="Update Product Info" class= "update" name="update"/></td>
 </tr>
 </table>
 </c:when>
@@ -119,12 +114,13 @@ li a {
 
 <c:if test="${param.submitted2 }">
 <sql:update dataSource="${dbsource}" var="updateStatus">
-	UPDATE claims SET status=? where username=? and pId=? and serialNo=? and pDate=?;
-            <sql:param value="${param.status}" />
+	UPDATE product SET pname=? , color=? , model=?  where pname=? and color=? and model=? ;
+            <sql:param value="${param.pname}" />
+            <sql:param value="${param.color}" />
+            <sql:param value="${param.model}" />
             <sql:param value="${data[0]}" />
             <sql:param value="${data[1]}" />
             <sql:param value="${data[2]}" />
-            <sql:param value="${data[3]}" />
         </sql:update>
 	<c:if test="${updateStatus>=1}">
             <font size="5" color='green'> Congratulations ! Data updated

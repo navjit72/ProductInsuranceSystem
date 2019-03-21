@@ -23,6 +23,7 @@
 	<fmt:parseNumber value="${ now.time / (1000*60*60*24*365) }" integerOnly="true" var="currentTime" />
  
      <c:set var="data" value="${fn:split(param.radiogroup,',') }" />
+     
      <fmt:parseDate value="${data[2]}" pattern="yyyy-MM-dd" var="parsedDate" />
      
      <sql:query dataSource="${dbsource }" var="claimDetails">

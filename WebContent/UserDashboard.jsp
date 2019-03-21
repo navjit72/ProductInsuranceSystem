@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,7 +96,34 @@ li a {
         <font color="green"><c:if test="${not empty param.susMsg}">
             <c:out value="${param.susMsg}" />
         </c:if></font>
-</form>
 
+<c:choose>
+<c:when test="${param.submitted and empty param.radiogroup}">
+<font color="red"><c:out value="No Product selected!" /></font>
+</c:when>
+<c:when test="${param.submitted and not empty param.radiogroup}">
+<c:set var="data" value="${fn:split(param.radiogroup,',') }" />
+<sql:query dataSource="${dbsource}" var="claimDetails">
+       SELECT * from claims where username='${sessionScope.username}' and pId='${data[0]}' and serialNo='${data[1]}' and pDate='${data[2]}' ;
+</sql:query>
+<c:choose>
+<c:when test="${claimDetails.rowCount==0 }">
+<font color="red"><c:out value="No Claim records found!" /></font>
+</c:when>
+<c:otherwise>
+<table style="margin : 50px auto;border: 1px solid black;">
+<tr><th>Claim Date</th><th>Issue</th><th>Status</th>
+</tr>
+<c:forEach var="rowy" items="${claimDetails.rows }">
+<tr>
+<td>${rowy.claimDate }</td><td>${rowy.issue }</td><td>${rowy.status }</td>
+</tr>
+</c:forEach>
+</table>
+</c:otherwise>
+</c:choose>
+</c:when>
+</c:choose>
+</form>
 </body>
 </html>
