@@ -10,6 +10,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Products</title>
+<link rel="stylesheet" href="file1.css">
 <style>
 .update{
 text-align: center;
@@ -25,36 +26,14 @@ padding: 10px;
 text-align: center; 
 margin: 100px auto;
 }
-table input, table select {
-width : 200px;
-}
-table th, table td{
-border: 1px solid black;
-}
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #dddddd;
-}
-li {
-  float: left;
-  border-right: 1px solid black;
-}
-li:last-child {
-  border-right: none;
-}
-li a {
-  display: block;
-  padding: 8px;
-}
 </style>
 </head>
 <body>
 <ul>
   <li><a href="AdminDashboard.jsp">Home</a></li>
   <li><a href="UpdateProducts.jsp">Products</a></li>
+  <li><a href="RegisteredProducts.jsp">Registered Products</a></li>
+  <li><a href="SearchUsers.jsp">Users</a></li>
   <li><a href="Login.jsp">Logout</a></li>
 </ul>
 
@@ -64,7 +43,7 @@ li a {
                            
                           
 <form action="" method="post">
-<h1 style ="text-align: center">Dashboard</h1>
+<h1 style ="text-align: center">Update Product</h1>
 <input type="hidden" name="submitted" value="true">
 <sql:query dataSource="${dbsource}" var="productDetails">
        SELECT * from product;
@@ -78,7 +57,7 @@ li a {
 
 <tr>
 <td>${row.pname }</td><td>${row.color}</td><td>${row.model }</td>
-<td><input type="radio" name="radiogroup" value="${row.pname },${row.color},${row.model }"/></td>
+<td><input type="radio" name="radiogroup" value="${row.pId},${row.pname },${row.color},${row.model }"/></td>
 </tr>
 </c:forEach>
 
@@ -88,7 +67,7 @@ li a {
 </table>
 </form>
 
-<form>
+<form action="UpdateProductsdb.jsp" method="">
 <input type="hidden" name="submitted2" value="true" />
 
 <c:choose>
@@ -101,9 +80,10 @@ li a {
 <tr><th>Product Name</th><th>Color</th><th>Model</th>
 </tr>
 <tr>
-<td><input type="text" value="${data[0]}" name="pname"/></td>
-<td><input type="text" value="${data[1]}" name="color"/></td>
-<td><input type="text" value="${data[2]}" name="model"/></td>
+<td><input type="hidden" value="${data[0]}" name="id"/>
+<input type="text" value="${data[1]}" name="pname"/></td>
+<td><input type="text" value="${data[2]}" name="color"/></td>
+<td><input type="text" value="${data[3]}" name="model"/></td>
 </tr>
 <tr>
 <td colspan="3"><input type="submit" value="Update Product Info" class= "update" name="update"/></td>
@@ -112,21 +92,12 @@ li a {
 </c:when>
 </c:choose>
 
-<c:if test="${param.submitted2 }">
-<sql:update dataSource="${dbsource}" var="updateStatus">
-	UPDATE product SET pname=? , color=? , model=?  where pname=? and color=? and model=? ;
-            <sql:param value="${param.pname}" />
-            <sql:param value="${param.color}" />
-            <sql:param value="${param.model}" />
-            <sql:param value="${data[0]}" />
-            <sql:param value="${data[1]}" />
-            <sql:param value="${data[2]}" />
-        </sql:update>
-	<c:if test="${updateStatus>=1}">
-            <font size="5" color='green'> Congratulations ! Data updated
-            successfully.</font>
-        </c:if>
-</c:if>
+<font color="red"><c:if test="${not empty param.errMsg}">
+            <c:out value="${param.errMsg}" />
+        </c:if></font>
+        <font color="green"><c:if test="${not empty param.susMsg}">
+            <c:out value="${param.susMsg}" />
+        </c:if></font>
 
 </form>
 </body>

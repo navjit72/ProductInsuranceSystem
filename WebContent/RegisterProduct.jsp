@@ -9,6 +9,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Register Product</title>
+<link rel="stylesheet" href="file1.css">
 <style>
 .register{
 text-align: center;
@@ -25,27 +26,6 @@ border: 1px solid black;
 padding: 10px; 
 text-align: center; 
 margin: 100px auto;
-}
-table input, table select {
-width : 200px;
-}
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #dddddd;
-}
-li {
-  float: left;
-  border-right: 1px solid black;
-}
-li:last-child {
-  border-right: none;
-}
-li a {
-  display: block;
-  padding: 8px;
 }
 </style>
 </head>
