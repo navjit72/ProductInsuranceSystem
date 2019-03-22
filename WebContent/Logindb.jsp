@@ -10,6 +10,7 @@
 <title>Insert User</title>
 </head>
 <body>
+
 <c:if test="${ empty param.username or empty param.password}">
             <c:redirect url="Login.jsp" >
                 <c:param name="errMsg" value="Please fill username and password" />
@@ -19,8 +20,9 @@
         <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
                            url="jdbc:mysql://localhost/groupproject"
                            user="root"  password="1234"/>
-                           
+                       
         <c:choose>
+        
         <c:when test="${param.username.startsWith('A')}">
         <sql:query dataSource="${dbsource}" var="adminResult">
             SELECT * from admin where adminId='${param.username}' and password='${param.password}';
@@ -44,8 +46,8 @@
                
         <c:if test="${result.rowCount!=0}">
         	<c:set var="username" value="${param.username}" scope="session" />            
-            <c:redirect url="Login.jsp" >
-                <c:param name="susMsg" value="Login in successfull." />
+            <c:redirect url="UserDashboard.jsp" >
+                
             </c:redirect>
         </c:if>
         <c:if test="${result.rowCount == 0}">

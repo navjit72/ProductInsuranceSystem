@@ -11,20 +11,14 @@
 <meta charset="ISO-8859-1">
 <title>Admin Dashboard</title>
 <link rel="stylesheet" href="file1.css">
+<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
-.update{
-text-align: center;
-border-radius: 5px;
-font-weight: bold;
-margin : 10px;
-padding-top : 5px;
-width : 150px;
-height : 25px;
-}
+
 form{ 
 padding: 10px; 
 text-align: center; 
-margin: 100px auto;
+margin: 80px auto;
 }
 
 </style>
@@ -48,7 +42,7 @@ margin: 100px auto;
        SELECT * from claims;
    </sql:query>
 
-<table style="margin : 0px auto;border: 1px solid black;">
+<table class="table-bordered table-striped" style="margin : 0px auto;">
 <tr><th>UserName</th><th>Product Name</th><th>Serial Number</th><th>Purchased Date</th><th>Claimed Date</th><th>Issue</th><th>Status</th><th>Click to Update</th>
 </tr>
 
@@ -59,14 +53,13 @@ margin: 100px auto;
 <c:forEach var="rowx" items="${productIds.rows }">
 <tr>
 <td>${row.username }</td><td>${rowx.pname }</td><td>${row.serialNo}</td><td>${row.pDate }</td><td>${row.claimDate }</td><td>${row.issue }</td><td>${row.status }</td>
-<td><input type="radio" name="radiogroup" value="${row.username },${row.pId},${row.serialNo },${row.pDate },${row.claimDate },${row.issue },${row.status },${row.claimId}"/></td>
+<td><input type="radio" name="radiogroup" value="${row.username },${row.pId},${row.serialNo },${row.pDate },${row.claimDate },${row.status },${row.claimId}"/></td>
 </tr>
 </c:forEach>
 </c:forEach>
-<tr>
-<td colspan="8"><input type="submit" value="Display Info" class= "update" name="display"/></td>
-</tr>
+
 </table>
+<input type="submit" value="Display Info" class= "btn btn-info" name="display"/>
 </form>
 
 
@@ -79,30 +72,31 @@ margin: 100px auto;
 </c:when>
 <c:when test="${param.submitted and not empty param.radiogroup}">
 <c:set var="data" value="${fn:split(param.radiogroup,',') }" />
-<table style="margin : 30px auto;border: 1px solid black;">
-<tr><th>Claim Date</th><th>Issue</th><th>Status</th>
+<table class="table-bordered table-striped" style="margin : 10px auto;">
+<tr><th>Serial Number</th><th>Claim Date</th><th>Status</th>
 </tr>
 <tr>
-<td>${data[4]}</td><td>${data[5]}</td>
-<td><input type="hidden" value="${data[7]}" name="id"/><select name="status">
+<td><input type="text" value="${data[2]}" disabled="disabled" class="form-control"/></td>
+<td><input type="text" value="${data[4]}" disabled="disabled" class="form-control"/></td>
+<td><input type="hidden" value="${data[6]}" name="id"/><select name="status" class="form-control">
 <option>Processing</option>
 <option>Accepted</option>
 <option>Rejected</option>
 </select></td>
 </tr>
-<tr>
-<td colspan="3"><input type="submit" value="Update Claim Info" class= "update" name="update"/></td>
-</tr>
 </table>
+<input type="submit" value="Update Claim Info" class= "btn btn-info" name="update"/>
 </c:when>
 </c:choose>
 
-<font color="red"><c:if test="${not empty param.errMsg}">
-            <c:out value="${param.errMsg}" />
-        </c:if></font>
-        <font color="green"><c:if test="${not empty param.susMsg}">
-            <c:out value="${param.susMsg}" />
-        </c:if></font>
+<div style="margin-top : 40px;">
+<c:if test="${not empty param.errMsg}">
+            <div class="alert alert-danger" role="alert"><c:out value="${param.errMsg}" /></div>
+        </c:if>
+<c:if test="${not empty param.susMsg}">
+           <div class="alert alert-success" role="alert"><c:out value="${param.susMsg}" /></div>
+        </c:if>
+</div>
 </form>
 </body>
 </html>

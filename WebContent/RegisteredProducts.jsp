@@ -11,25 +11,17 @@
 <meta charset="ISO-8859-1">
 <title>Registered Products</title>
 <link rel="stylesheet" href="file1.css">
+<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
-.search{
-text-align: center;
-border-radius: 5px;
-font-weight: bold;
-margin : 10px;
-padding-top : 5px;
-width : 150px;
-height : 25px;
-}
 form{ 
 padding: 10px; 
 text-align: center; 
 margin: 100px auto;
 }
-.searchCriteria th, .searchCriteria td{
-border : none;
+.btn-info{
+margin-top : 0px;
 }
-
 </style>
 </head>
 <body>
@@ -48,16 +40,16 @@ border : none;
 <h1 style ="text-align: center">Registered Products</h1>
 <input type="hidden" name="submitted" value="true">
 
-<table class="searchCriteria" style="margin : 0px auto;">
+<table class="table-borderless" style="margin : 20px auto;">
 <tr>
-<td><select name="typeofSearch">
-<option value="username">UserName</option><option value="pname">Product Name</option><option value="serialNo">Serial Number</option><option value="pDate">Purchase Date</option>
+<td><select name="typeofSearch" class="form-control">
+<option value="username">UserName</option><option value="pname">Product Name</option><option value="serialNo">Serial Number</option><option value="purchaseDate">Purchase Date</option>
 </select></td>
 <td colspan="2">
-<input type="text" name="searchData"/>
+<input type="text" class="form-control" name="searchData"/>
 </td>
 
-<td><input type="submit" value="Search" class= "search" name="search"/></td>
+<td><input type="submit" value="Search" class= "btn btn-info" name="search"/></td>
 </tr>
 </table>
 
@@ -90,13 +82,13 @@ border : none;
 
 <c:choose>
 <c:when test="${usersDetails.rowCount==0 }">
-<font color="red"><c:out value="No records found!" /></font>
+<div class="alert alert-danger" role="alert"><c:out value="No records found!" /></div>
 </c:when>
 <c:when test="${product.rowCount==0 }">
-<font color="red"><c:out value="No such product found!" /></font>
+<div class="alert alert-danger" role="alert"><c:out value="No such product found!" /></div>
 </c:when>
 <c:otherwise>
-<table style="margin : 0px auto;border: 1px solid black;">
+<table class="table-bordered table-striped" style="margin : 10px auto;">
 <tr><th>UserName</th><th>Product Name</th><th>Serial Number</th><th>Purchased Date</th>
 </tr>
 <c:forEach var="row" items="${usersDetails.rows }">

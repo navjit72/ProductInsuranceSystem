@@ -11,21 +11,15 @@
 <meta charset="ISO-8859-1">
 <title>Products</title>
 <link rel="stylesheet" href="file1.css">
+<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
-.update{
-text-align: center;
-border-radius: 5px;
-font-weight: bold;
-margin : 10px;
-padding-top : 5px;
-width : 150px;
-height : 25px;
-}
 form{ 
 padding: 10px; 
 text-align: center; 
-margin: 100px auto;
+margin: 80px auto;
 }
+
 </style>
 </head>
 <body>
@@ -49,7 +43,7 @@ margin: 100px auto;
        SELECT * from product;
    </sql:query>
 
-<table style="margin : 0px auto;border: 1px solid black;">
+<table class="table-bordered table-striped" style="margin : 0px auto;">
 <tr><th>Product Name</th><th>Color</th><th>Model</th><th>Click to Update</th>
 </tr>
 
@@ -61,10 +55,8 @@ margin: 100px auto;
 </tr>
 </c:forEach>
 
-<tr>
-<td colspan="4"><input type="submit" value="Update Product" class= "update" name="update"/></td>
-</tr>
 </table>
+<input type="submit" value="Update Product" class= "btn btn-info" name="update"/>
 </form>
 
 <form action="UpdateProductsdb.jsp" method="">
@@ -76,28 +68,28 @@ margin: 100px auto;
 </c:when>
 <c:when test="${param.submitted and not empty param.radiogroup}">
 <c:set var="data" value="${fn:split(param.radiogroup,',') }" />
-<table style="margin : 20px auto;border: 1px solid black;">
+<table class="table-bordered table-striped" style="margin : 0px auto;">
 <tr><th>Product Name</th><th>Color</th><th>Model</th>
 </tr>
 <tr>
 <td><input type="hidden" value="${data[0]}" name="id"/>
-<input type="text" value="${data[1]}" name="pname"/></td>
-<td><input type="text" value="${data[2]}" name="color"/></td>
-<td><input type="text" value="${data[3]}" name="model"/></td>
-</tr>
-<tr>
-<td colspan="3"><input type="submit" value="Update Product Info" class= "update" name="update"/></td>
+<input type="text" value="${data[1]}" name="pname" class="form-control"/></td>
+<td><input type="text" value="${data[2]}" name="color" class="form-control"/></td>
+<td><input type="text" value="${data[3]}" name="model" class="form-control"/></td>
 </tr>
 </table>
+<input type="submit" value="Update Product Info" class= "btn btn-info" name="update"/>
 </c:when>
 </c:choose>
 
-<font color="red"><c:if test="${not empty param.errMsg}">
-            <c:out value="${param.errMsg}" />
-        </c:if></font>
-        <font color="green"><c:if test="${not empty param.susMsg}">
-            <c:out value="${param.susMsg}" />
-        </c:if></font>
+<div style="margin-top : 40px;">
+<c:if test="${not empty param.errMsg}">
+            <div class="alert alert-danger" role="alert"><c:out value="${param.errMsg}" /></div>
+        </c:if>
+<c:if test="${not empty param.susMsg}">
+           <div class="alert alert-success" role="alert"><c:out value="${param.susMsg}" /></div>
+        </c:if>
+</div>
 
 </form>
 </body>

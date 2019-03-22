@@ -11,25 +11,17 @@
 <meta charset="ISO-8859-1">
 <title>Users</title>
 <link rel="stylesheet" href="file1.css">
+<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
-.search{
-text-align: center;
-border-radius: 5px;
-font-weight: bold;
-margin : 10px;
-padding-top : 5px;
-width : 150px;
-height : 25px;
+.btn-info{
+margin-top:0px;
 }
 form{ 
 padding: 10px; 
 text-align: center; 
 margin: 100px auto;
 }
-.searchCriteria th, .searchCriteria td{
-border : none;
-}
-
 </style>
 </head>
 <body>
@@ -48,13 +40,13 @@ border : none;
 <h1 style ="text-align: center">Users</h1>
 <input type="hidden" name="submitted" value="true">
 
-<table class="searchCriteria" style="margin : 0px auto;">
+<table class="table-borderless" style="margin : 0px auto;">
 <tr>
-<td><select name="typeofSearch">
+<td><select name="typeofSearch" class="form-control">
 <option value="username">Username</option><option value="phone">Phone</option><option value="email">Email</option>
 </select></td>
-<td colspan="2"><input type="text" name="searchData"/></td>
-<td><input type="submit" value="Search" class= "search" name="search"/></td>
+<td colspan="2"><input type="text" class="form-control" name="searchData"/></td>
+<td><input type="submit" value="Search" class= "btn btn-info" name="search"/></td>
 </tr>
 </table>
 
@@ -69,7 +61,7 @@ border : none;
    </sql:query>
 </c:if>
 
-<table style="margin : 0px auto;border: 1px solid black;">
+<table class="table-bordered table-striped" style="margin : 10px auto;">
 <tr><th>UserName</th><th>Phone Number</th><th>Email</th><th>Full name</th>
 </tr>
 <c:forEach var="row" items="${usersDetails.rows }">

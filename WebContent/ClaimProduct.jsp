@@ -10,16 +10,10 @@
 <meta charset="ISO-8859-1">
 <title>Claim Product</title>
 <link rel="stylesheet" href="file1.css">
+<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
-.claim{
-text-align: center;
-border-radius: 5px;
-font-weight: bold;
-margin : 10px;
-padding-top : 5px;
-width : 120px;
-height : 25px;
-}
+
 form{ 
 padding: 10px; 
 text-align: center; 
@@ -46,7 +40,7 @@ margin: 100px auto;
        SELECT * from registeredproducts where username='${sessionScope.username}';
    </sql:query>
 
-<table style="margin : 0px auto;border: 1px solid black;">
+<table class="table-bordered table-striped" style="margin : 0px auto;">
 <tr><th>Product Name</th><th>Serial Number</th><th>Purchase Date</th><th>Issue</th><th>Click to claim</th>
 </tr>
 
@@ -56,22 +50,22 @@ margin: 100px auto;
    </sql:query>
 <c:forEach var="rowx" items="${productIds.rows }">
 <tr>
-<td>${rowx.pname }</td><td>${row.serialNo}</td><td>${row.purchaseDate }</td><td><textarea rows="3" cols="25" name="issue"></textarea></td>
+<td>${rowx.pname }</td><td>${row.serialNo}</td><td>${row.purchaseDate }</td><td><textarea rows="2" cols="25" class="form-control" name="issue"></textarea></td>
 <td><input type="radio" name="radiogroup" value="${row.pId},${row.serialNo },${row.purchaseDate }"/></td>
 </tr>
 </c:forEach>
 </c:forEach>
-<tr>
-<td colspan="5"><input type="submit" value="Claim Product" class= "claim" name="claim"/></td>
-</tr>
 </table>
+<input type="submit" value="Claim Product" class= "btn btn-info" name="claim"/>
 
-<font color="red"><c:if test="${not empty param.errMsg}">
-            <c:out value="${param.errMsg}" />
-        </c:if></font>
-        <font color="green"><c:if test="${not empty param.susMsg}">
-            <c:out value="${param.susMsg}" />
-        </c:if></font>
+<div style="margin-top : 40px;">
+<c:if test="${not empty param.errMsg}">
+            <div class="alert alert-danger" role="alert"><c:out value="${param.errMsg}" /></div>
+        </c:if>
+<c:if test="${not empty param.susMsg}">
+           <div class="alert alert-success" role="alert"><c:out value="${param.susMsg}" /></div>
+        </c:if>
+</div>
 </form>
 
 </body>
