@@ -9,11 +9,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Update Product</title>
+<title>Add Product</title>
 </head>
 <body>
 	<c:if test="${ empty param.pname}">
-		<c:redirect url="UpdateProducts.jsp">
+		<c:redirect url="AddProduct.jsp">
 			<c:param name="errMsg" value="Product Name is a required fireld" />
 		</c:redirect>
 
@@ -22,17 +22,16 @@
 		url="jdbc:mysql://bgrt8ztyyfrg23qifg66-mysql.services.clever-cloud.com/bgrt8ztyyfrg23qifg66" 
 		user="uj3aqvvxbcwqdgu9" password="dXgTyr43Rt8AykoIx3pb" />
 	<sql:update dataSource="${dbsource}" var="updateStatus">
-	UPDATE product SET pname=? , color=? , model=?  where pId=? ;
+	Insert into product(pname,color,model) values(?,?,?);
             <sql:param value="${param.pname}" />
 		<sql:param value="${param.color}" />
 		<sql:param value="${param.model}" />
-		<sql:param value="${param.id}" />
 	</sql:update>
 	<c:if test="${updateStatus>=1}">
-		<font size="5" color='green'> Congratulations ! Data updated
+		<font size="5" color='green'> Congratulations ! Data inserted
 			successfully.</font>
-		<c:redirect url="UpdateProducts.jsp">
-			<c:param name="susMsg" value="Product updated successfully" />
+		<c:redirect url="AddProduct.jsp">
+			<c:param name="susMsg" value="Product inserted successfully" />
 		</c:redirect>
 	</c:if>
 </body>
