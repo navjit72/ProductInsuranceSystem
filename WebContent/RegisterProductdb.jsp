@@ -10,7 +10,7 @@
 <title>Insert Product</title>
 </head>
 <body>
-<c:if test="${ empty param.serialNo or empty param.pDate}">
+		<c:if test="${ empty param.serialNo or empty param.pDate}">
             <c:redirect url="RegisterProduct.jsp" >
                 <c:param name="errMsg" value="Serial Number and purchase date are required firelds" />
             </c:redirect>
@@ -26,7 +26,7 @@
        
  		<c:forEach var="row" items="${product.rows}">
  		 <sql:query dataSource="${dbsource}" var="registerDetails">
-       		Select * from registeredproducts where username='${sessionScope.username}' and pId='${row.pId }' and serialNo='${param.serialNo }' and purchaseDate='${param.pDate}';
+       		Select * from registeredproducts where username='${cookie.currentUser.value}' and pId='${row.pId }' and serialNo='${param.serialNo }' and purchaseDate='${param.pDate}';
        </sql:query>
        <c:choose>
        <c:when test="${registerDetails.rowCount>0 }">
@@ -37,7 +37,7 @@
        <c:otherwise>
        <sql:update dataSource="${dbsource}" var="result">
             INSERT INTO registeredproducts VALUES (?,?,?,?);
-            <sql:param value="${sessionScope.username}" />
+            <sql:param value="${cookie.currentUser.value}" />
             <sql:param value="${row.pId}" />
             <sql:param value="${param.serialNo}" />
             <sql:param value="${param.pDate}" />

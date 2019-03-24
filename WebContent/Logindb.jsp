@@ -11,12 +11,13 @@
 </head>
 <body>
 
-<c:if test="${ empty param.username or empty param.password}">
+		<c:if test="${ empty param.username or empty param.password}">
             <c:redirect url="Login.jsp" >
                 <c:param name="errMsg" value="Please fill username and password" />
             </c:redirect>
  
-        </c:if>
+        </c:if>    
+        
         <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
                            url="jdbc:mysql://localhost/groupproject"
                            user="root"  password="1234"/>
@@ -33,7 +34,12 @@
             </c:redirect>
         </c:if>
          <c:if test="${adminResult.rowCount!=0}">
-         <c:set var="username" value="${param.username}" scope="session" />  
+         
+         <c:set var="username" value="${param.username}" scope="session" />
+         <%Cookie logincookie = new Cookie("currentAdmin",request.getParameter("username")) ;
+        	logincookie.setMaxAge(30*60);
+        	response.addCookie(logincookie);     
+        %>  
         	<c:redirect url="AdminDashboard.jsp" >             
             </c:redirect>
        	</c:if>
@@ -45,7 +51,12 @@
         </sql:query>
                
         <c:if test="${result.rowCount!=0}">
-        	<c:set var="username" value="${param.username}" scope="session" />            
+        	<c:set var="username" value="${param.username}" scope="session" />
+        	<%Cookie logincookie = new Cookie("currentUser",request.getParameter("username")) ;
+        	logincookie.setMaxAge(30*60);
+        	response.addCookie(logincookie);     
+        	%>
+        	            
             <c:redirect url="UserDashboard.jsp" >
                 
             </c:redirect>

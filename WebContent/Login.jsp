@@ -30,6 +30,20 @@ margin: 100px auto;
 </head>
 <body>
 
+<%
+String admin = null;
+String user = null;
+Cookie[] cookies = request.getCookies();
+if(cookies !=null){
+for(Cookie cookie : cookies){
+	if(cookie.getName().equals("currentAdmin")) admin = cookie.getValue();
+	if(cookie.getName().equals("currentUser")) user = cookie.getValue();
+}
+}
+if(admin != null) response.sendRedirect("AdminDashboard.jsp");
+if(user != null) response.sendRedirect("UserDashboard.jsp");
+%>
+
 <form action="Logindb.jsp" method="post">
 <h1>Login Form</h1>
 <input type="hidden" name="submitted" value="true">

@@ -11,16 +11,7 @@
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style type="text/css">
-/* .register{
-text-align: center;
-border-radius: 5px;
-font-weight: bold;
-margin : 10px;
-padding-top : 5px;
-width : 100px;
-height : 25px;
-} */
-.btn-info{
+.btn-info, .btn-secondary{
 width:200px;
 }
 form{
@@ -65,16 +56,19 @@ margin: 10px;
 <tr>
 <td colspan="2"><input type="submit" value="Register" class= "btn btn-info" name="register"/></td>
 </tr>
+<tr>
+<td colspan="2"><a href="Login.jsp" class="btn btn-secondary" role="button">Go Back</a></td>
+</tr>
 </table>
 
-<font color="red"><c:if test="${not empty param.errMsg}">
-            <c:out value="${param.errMsg}" />
-        </c:if></font>
-        <font color="green"><c:if test="${not empty param.susMsg}">
-            <c:out value="${param.susMsg}" />
-        </c:if></font>
+<div style="margin-top : 40px;">
+<c:if test="${not empty param.errMsg}">
+            <div class="alert alert-danger" role="alert"><c:out value="${param.errMsg}" /></div>
+        </c:if>
+<c:if test="${not empty param.susMsg}">
+           <div class="alert alert-success" role="alert"><c:out value="${param.susMsg}" /></div>
+        </c:if>
+</div>
 </form>
-<a href="Login.jsp">Go To Main Page</a>
-
 </body>
 </html>

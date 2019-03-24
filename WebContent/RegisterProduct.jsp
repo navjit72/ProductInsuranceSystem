@@ -9,11 +9,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Register Product</title>
-<link rel="stylesheet" href="file1.css">
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
-
+.btn-info{
+width: 200px;
+margin-top :20px;
+}
 table input, table select{
 margin:10px;
 }
@@ -27,11 +29,11 @@ margin: 50px auto;
 </style>
 </head>
 <body>
-<ul>
-  <li><a href="UserDashboard.jsp">Home</a></li>
-  <li><a href="RegisterProduct.jsp">Register Product</a></li>
-  <li><a href="ClaimProduct.jsp">Claim Product</a></li>
-  <li><a href="Login.jsp">Logout</a></li>
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item"><a class="nav-link" href="UserDashboard.jsp">Home</a></li>
+  <li class="nav-item"><a class="nav-link active" href="RegisterProduct.jsp">Register Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="ClaimProduct.jsp">Claim Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="Login.jsp">Logout</a></li>
 </ul>
 
 <form action="RegisterProductdb.jsp" method="post">
@@ -40,7 +42,7 @@ margin: 50px auto;
 <table class="table-borderless" style="margin : 0px auto">
 <tr>
 <th>User name : </th>
-<td><input type="text" class="form-control" disabled="disabled" value="${sessionScope.username}"/></td>
+<td><input type="text" class="form-control" disabled="disabled" value="${cookie.currentUser.value}"/></td>
 </tr>
 <tr>
 <th>Product Name :  </th>

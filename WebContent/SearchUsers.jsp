@@ -10,12 +10,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Users</title>
-<link rel="stylesheet" href="file1.css">
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
 .btn-info{
-margin-top:0px;
+width: 200px;
 }
 form{ 
 padding: 10px; 
@@ -25,12 +24,13 @@ margin: 100px auto;
 </style>
 </head>
 <body>
-<ul>
-  <li><a href="AdminDashboard.jsp">Home</a></li>
-  <li><a href="UpdateProducts.jsp">Products</a></li>
-  <li><a href="RegisteredProducts.jsp">Registered Products</a></li>
-  <li><a href="SearchUsers.jsp">Users</a></li>
-  <li><a href="Login.jsp">Logout</a></li>
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item"><a class="nav-link" href="AdminDashboard.jsp">Home</a></li>
+  <li class="nav-item"><a class="nav-link" href="AddProduct.jsp">Add Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="UpdateProducts.jsp">Update Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="RegisteredProducts.jsp">Registered Products</a></li>
+  <li class="nav-item"><a class="nav-link active" href="SearchUsers.jsp">Users</a></li>
+  <li class="nav-item"><a class="nav-link" href="Login.jsp">Logout</a></li>
 </ul>
 
  <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
@@ -61,6 +61,11 @@ margin: 100px auto;
    </sql:query>
 </c:if>
 
+<c:choose>
+<c:when test="${usersDetails.rowCount==0 }">
+<div class="alert alert-danger" role="alert" style="margin : 10px auto;"><c:out value="No records found!" /></div>
+</c:when>
+<c:otherwise>
 <table class="table-bordered table-striped" style="margin : 10px auto;">
 <tr><th>UserName</th><th>Phone Number</th><th>Email</th><th>Full name</th>
 </tr>
@@ -70,32 +75,8 @@ margin: 100px auto;
 </tr>
 </c:forEach>
 </table>
-
-<%-- <c:choose>
-<c:when test="${param.submitted2 and empty param.radiogroup}">
-<font color="red"><c:out value="No user selected!" /></font>
-</c:when>
-<c:when test="${param.submitted2 and not empty param.radiogroup}">
-<sql:query dataSource="${dbsource}" var="usersProducts">
-       SELECT * from registeredproducts where username='${param.radiogroup }';
-   </sql:query>
-<table style="margin : 20px auto;border: 1px solid black;">
-<tr><th>Product Name</th><th>Serial Number</th><th>Purchased Date</th>
-</tr>
-<c:forEach var="row" items="${usersProducts.rows }">
-<sql:query dataSource="${dbsource}" var="products">
-       SELECT pname from product where pId='${row.pId }';
-</sql:query>
-<c:forEach var="rowx" items="${products.rows }">
-<tr>
-<td>${rowx.pname }</td><td>${row.serialNo}</td><td>${row.purchaseDate}</td>
-</tr>
-</c:forEach>
-</c:forEach>
-</table>
-</c:when>
-</c:choose> --%>
-
+</c:otherwise>
+</c:choose>
 </form>
 </body>
 </html>

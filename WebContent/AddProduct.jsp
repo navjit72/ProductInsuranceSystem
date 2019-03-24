@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Update Product</title>
+<title>Add Product</title>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
@@ -27,8 +27,8 @@ margin-top :20px;
 <body>
 <ul class="nav nav-tabs justify-content-center">
   <li class="nav-item"><a class="nav-link" href="AdminDashboard.jsp">Home</a></li>
-  <li class="nav-item"><a class="nav-link" href="AddProduct.jsp">Add Product</a></li>
-  <li class="nav-item"><a class="nav-link active" href="UpdateProducts.jsp">Update Product</a></li>
+  <li class="nav-item"><a class="nav-link active" href="AddProduct.jsp">Add Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="UpdateProducts.jsp">Update Product</a></li>
   <li class="nav-item"><a class="nav-link" href="RegisteredProducts.jsp">Registered Products</a></li>
   <li class="nav-item"><a class="nav-link" href="SearchUsers.jsp">Users</a></li>
   <li class="nav-item"><a class="nav-link" href="Login.jsp">Logout</a></li>
@@ -39,51 +39,27 @@ margin-top :20px;
                            user="root"  password="1234"/>
                            
                           
-<form action="" method="post">
-<h1 style ="text-align: center">Update Product</h1>
+<form action="AddProductdb.jsp" method="post">
+<h1 style ="text-align: center">Add Product</h1>
 <input type="hidden" name="submitted" value="true">
-<sql:query dataSource="${dbsource}" var="productDetails">
-       SELECT * from product;
-   </sql:query>
-
-<table class="table-bordered table-striped" style="margin : 0px auto;">
-<tr><th>Product Name</th><th>Color</th><th>Model</th><th>Click to Update</th>
-</tr>
-
-<c:forEach var="row" items="${productDetails.rows }">
-
+<table class="table-borderless" style="margin : 0px auto">
 <tr>
-<td>${row.pname }</td><td>${row.color}</td><td>${row.model }</td>
-<td><input type="radio" name="radiogroup" value="${row.pId},${row.pname },${row.color},${row.model }"/></td>
-</tr>
-</c:forEach>
-
-</table>
-<input type="submit" value="Update Product" class= "btn btn-info" name="update"/>
-</form>
-
-<form action="UpdateProductsdb.jsp" method="">
-<input type="hidden" name="submitted2" value="true" />
-
-<c:choose>
-<c:when test="${param.submitted and empty param.radiogroup}">
-<div class="alert alert-danger" role="alert"><c:out value="No Product selected!" /></div>
-</c:when>
-<c:when test="${param.submitted and not empty param.radiogroup}">
-<c:set var="data" value="${fn:split(param.radiogroup,',') }" />
-<table class="table-bordered table-striped" style="margin : 0px auto;">
-<tr><th>Product Name</th><th>Color</th><th>Model</th>
+<th>Product Name : </th>
+<td><input type="text" class="form-control" name="pname"/></td>
 </tr>
 <tr>
-<td><input type="hidden" value="${data[0]}" name="id"/>
-<input type="text" value="${data[1]}" name="pname" class="form-control"/></td>
-<td><input type="text" value="${data[2]}" name="color" class="form-control"/></td>
-<td><input type="text" value="${data[3]}" name="model" class="form-control"/></td>
+<th>Color : </th>
+<td><input type="text" class="form-control" name="color"/></td>
+</tr>
+<tr>
+<th>Model : </th>
+<td><input type="text" class="form-control" name="model"/></td>
+</tr>
+<tr>
+<tr>
+<td colspan="2"><input type="submit" value="Add" class= "btn btn-info" name="register"/></td>
 </tr>
 </table>
-<input type="submit" value="Update Product Info" class= "btn btn-info" name="update"/>
-</c:when>
-</c:choose>
 
 <div style="margin-top : 40px;">
 <c:if test="${not empty param.errMsg}">
@@ -93,7 +69,6 @@ margin-top :20px;
            <div class="alert alert-success" role="alert"><c:out value="${param.susMsg}" /></div>
         </c:if>
 </div>
-
 </form>
 </body>
 </html>

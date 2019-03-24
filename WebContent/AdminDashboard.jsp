@@ -10,11 +10,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Admin Dashboard</title>
-<link rel="stylesheet" href="file1.css">
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
-
+.btn-info{
+width: 200px;
+margin-top :20px;
+}
 form{ 
 padding: 10px; 
 text-align: center; 
@@ -24,14 +26,14 @@ margin: 80px auto;
 </style>
 </head>
 <body>
-<ul>
-  <li><a href="AdminDashboard.jsp">Home</a></li>
-  <li><a href="UpdateProducts.jsp">Products</a></li>
-  <li><a href="RegisteredProducts.jsp">Registered Products</a></li>
-  <li><a href="SearchUsers.jsp">Users</a></li>
-  <li><a href="Login.jsp">Logout</a></li>
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item"><a class="nav-link active" href="AdminDashboard.jsp">Home</a></li>
+  <li class="nav-item"><a class="nav-link" href="AddProduct.jsp">Add Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="UpdateProducts.jsp">Update Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="RegisteredProducts.jsp">Registered Products</a></li>
+  <li class="nav-item"><a class="nav-link" href="SearchUsers.jsp">Users</a></li>
+  <li class="nav-item"><a class="nav-link" href="Logoutdb.jsp">Logout</a></li>
 </ul>
-
  <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
                            url="jdbc:mysql://localhost/groupproject"
                            user="root"  password="1234"/>
@@ -68,7 +70,7 @@ margin: 80px auto;
 
 <c:choose>
 <c:when test="${param.submitted and empty param.radiogroup}">
-<font color="red"><c:out value="No Product selected!" /></font>
+<div class="alert alert-danger" role="alert"><c:out value="No Product selected!" /></div>
 </c:when>
 <c:when test="${param.submitted and not empty param.radiogroup}">
 <c:set var="data" value="${fn:split(param.radiogroup,',') }" />

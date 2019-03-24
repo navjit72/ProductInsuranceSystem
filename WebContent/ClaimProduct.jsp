@@ -9,24 +9,26 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Claim Product</title>
-<link rel="stylesheet" href="file1.css">
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
-
+.btn-info{
+width: 200px;
+margin-top :20px;
+}
 form{ 
 padding: 10px; 
 text-align: center; 
-margin: 100px auto;
+margin: 60px auto;
 }
 </style>
 </head>
 <body>
-<ul>
-  <li><a href="UserDashboard.jsp">Home</a></li>
-  <li><a href="RegisterProduct.jsp">Register Product</a></li>
-  <li><a href="ClaimProduct.jsp">Claim Product</a></li>
-  <li><a href="Login.jsp">Logout</a></li>
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item"><a class="nav-link" href="UserDashboard.jsp">Home</a></li>
+  <li class="nav-item"><a class="nav-link" href="RegisterProduct.jsp">Register Product</a></li>
+  <li class="nav-item"><a class="nav-link active" href="ClaimProduct.jsp">Claim Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="Login.jsp">Logout</a></li>
 </ul>
 
 <form action="ClaimProductdb.jsp" method="post">
@@ -37,7 +39,7 @@ margin: 100px auto;
                            user="root"  password="1234"/>
                            
 <sql:query dataSource="${dbsource}" var="regProducts">
-       SELECT * from registeredproducts where username='${sessionScope.username}';
+       SELECT * from registeredproducts where username='${cookie.currentUser.value}';
    </sql:query>
 
 <table class="table-bordered table-striped" style="margin : 0px auto;">

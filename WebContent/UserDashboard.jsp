@@ -10,7 +10,6 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>User Dashboard</title>
-<link rel="stylesheet" href="file1.css">
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
@@ -19,14 +18,18 @@ padding: 10px;
 text-align: center; 
 margin: 100px auto;
 }
+.btn-info{
+width: 200px;
+margin-top :20px;
+}
 </style>
 </head>
 <body>
-<ul>
-  <li><a href="UserDashboard.jsp">Home</a></li>
-  <li><a href="RegisterProduct.jsp">Register Product</a></li>
-  <li><a href="ClaimProduct.jsp">Claim Product</a></li>
-  <li><a href="Login.jsp">Logout</a></li>
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item"><a class="nav-link active" href="UserDashboard.jsp">Home</a></li>
+  <li class="nav-item"><a class="nav-link" href="RegisterProduct.jsp">Register Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="ClaimProduct.jsp">Claim Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="Logoutdb.jsp">Logout</a></li>
 </ul>
 
 <form action="" method="post">
@@ -37,7 +40,7 @@ margin: 100px auto;
                            user="root"  password="1234"/>
                            
 <sql:query dataSource="${dbsource}" var="regProducts">
-       SELECT * from registeredproducts where username='${sessionScope.username}';
+       SELECT * from registeredproducts where username='${cookie.currentUser.value}';
    </sql:query>
 
 <table class="table-bordered table-striped" style="margin : 0px auto;">
@@ -74,7 +77,7 @@ margin: 100px auto;
 <c:when test="${param.submitted and not empty param.radiogroup}">
 <c:set var="data" value="${fn:split(param.radiogroup,',') }" />
 <sql:query dataSource="${dbsource}" var="claimDetails">
-       SELECT * from claims where username='${sessionScope.username}' and pId='${data[0]}' and serialNo='${data[1]}' and pDate='${data[2]}' ;
+       SELECT * from claims where username='${cookie.currentUser.value}' and pId='${data[0]}' and serialNo='${data[1]}' and pDate='${data[2]}' ;
 </sql:query>
 <c:choose>
 <c:when test="${claimDetails.rowCount==0 }">

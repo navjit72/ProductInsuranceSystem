@@ -27,7 +27,7 @@
      <fmt:parseDate value="${data[2]}" pattern="yyyy-MM-dd" var="parsedDate" />
      
      <sql:query dataSource="${dbsource }" var="claimDetails">
-		Select * from claims where username='${sessionScope.username}' and pId='${data[0]}' and serialNo='${data[1]}' and pDate='${data[2]}';
+		Select * from claims where username='${cookie.currentUser.value}' and pId='${data[0]}' and serialNo='${data[1]}' and pDate='${data[2]}';
 		</sql:query>
      <fmt:parseNumber value="${ parsedDate.time / (1000*60*60*24*365) }" integerOnly="true" var="purchasedTime" />
      
@@ -38,7 +38,7 @@
             
         <sql:update dataSource="${dbsource}" var="result">
             INSERT INTO claims(username,pId,serialNo,pDate,claimDate,issue) VALUES (?,?,?,?,?,?);
-            <sql:param value="${sessionScope.username}" />
+            <sql:param value="${cookie.currentUser.value}" />
             <sql:param value="${data[0]}" />
             <sql:param value="${data[1]}" />
             <sql:param value="${data[2]}" />

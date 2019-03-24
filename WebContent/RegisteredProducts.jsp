@@ -10,7 +10,6 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Registered Products</title>
-<link rel="stylesheet" href="file1.css">
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <style>
@@ -20,17 +19,18 @@ text-align: center;
 margin: 100px auto;
 }
 .btn-info{
-margin-top : 0px;
+width: 200px;
 }
 </style>
 </head>
 <body>
-<ul>
-  <li><a href="AdminDashboard.jsp">Home</a></li>
-  <li><a href="UpdateProducts.jsp">Products</a></li>
-  <li><a href="RegisteredProducts.jsp">Registered Products</a></li>
-  <li><a href="SearchUsers.jsp">Users</a></li>
-  <li><a href="Login.jsp">Logout</a></li>
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item"><a class="nav-link" href="AdminDashboard.jsp">Home</a></li>
+  <li class="nav-item"><a class="nav-link" href="AddProduct.jsp">Add Product</a></li>
+  <li class="nav-item"><a class="nav-link" href="UpdateProducts.jsp">Update Product</a></li>
+  <li class="nav-item"><a class="nav-link active" href="RegisteredProducts.jsp">Registered Products</a></li>
+  <li class="nav-item"><a class="nav-link" href="SearchUsers.jsp">Users</a></li>
+  <li class="nav-item"><a class="nav-link" href="Login.jsp">Logout</a></li>
 </ul>
 
  <sql:setDataSource var="dbsource" driver="com.mysql.jdbc.Driver"
